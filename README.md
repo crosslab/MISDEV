@@ -1,12 +1,15 @@
-                   MISDEV is Management Information System development platform
+                  
+		   MISDEV is Management Information System development platform
 
 Brief introduction:
 
-    MISDEV is based on a number of outstanding open source projects, highly integrated packaging 
+
+     MISDEV is based on a number of outstanding open source projects, highly integrated packaging 
      and efficient, high performance, strong security of the open source J2EE development platform.
 
     MISDEV include the basic functions of the enterprise information system and efficient code generation tool, 
     Log, data dictionary. this tool provides a simple single table, a pair of multiple, tree structure function.
+
 
 Front end:
 
@@ -43,7 +46,7 @@ Next plan:
 
 How to exchange, feedback and participate in the contribution?
 
-    QQ Group£º1529530255
+    QQ£º1529530255
     E-mail£ºcrosslab@163.com
     GitHub£ºhttps://github.com/crosslab/MISDEV
 
