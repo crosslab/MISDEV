@@ -2,10 +2,11 @@
 
 Brief introduction:
 
-    MISDEV is based on a number of outstanding open source projects, highly integrated packaging and efficient, high performance, strong security of the open source J2EE development platform
+    MISDEV is based on a number of outstanding open source projects, highly integrated packaging 
+     and efficient, high performance, strong security of the open source J2EE development platform.
 
-    MISDEV include the basic functions of the enterprise information system and efficient code generation tool, Log, data dictionary. this tool provides a simple single table, a pair of multiple, tree structure function.
-
+    MISDEV include the basic functions of the enterprise information system and efficient code generation tool,
+    Log, data dictionary. this tool provides a simple single table, a pair of multiple, tree structure function.
 
 Front end:
 
