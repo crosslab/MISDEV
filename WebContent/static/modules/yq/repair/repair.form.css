@@ -1,0 +1,23 @@
+.input-control {
+	width: 211px;
+}
+
+.textarea-control {
+	width: 527px;
+}
+
+.select-time-control {
+	width: 210px;
+}
+
+.form-horizontal .label-control-l {
+  float: left;
+  width: 180px;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.control-group.label-control-r {
+  width: 90px;
+  text-align: right;
+}

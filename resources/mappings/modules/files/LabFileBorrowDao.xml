@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="labs.modules.files.dao.LabFileBorrowDao">
+    
+	<sql id="labFileBorrowColumns">
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.stamp AS "stamp",
+		a.t1 AS "t1",
+		a.t2 AS "t2",
+		a.t3 AS "t3",
+		a.fileborrowid AS "fileborrowid",
+		a.fileborrowstatus AS "fileborrowstatus",
+		a.reqdepartment AS "reqdepartment",
+		a.reqstartdate AS "reqstartdate",
+		a.reqenddate AS "reqenddate",
+		a.approvename AS "approvename",
+		a.approveopinion AS "approveopinion",
+		a.reqname AS "reqname",
+		a.reqreason AS "reqreason",
+		a.approvedate AS "approvedate",
+		a.borrowexecuter AS "borrowexecuter",
+		a.borrowrecheck AS "borrowrecheck",
+		a.borrowrecheckdate AS "borrowrecheckdate",
+		a.revertexecuter AS "revertexecuter",
+		a.revertrecheck AS "revertrecheck",
+		a.revertrecheckdate AS "revertrecheckdate",
+		a.id AS "id",
+		a.reqcontentcount AS "reqcontentcount"
+	</sql>
+	
+	<sql id="labFileBorrowJoins">
+	</sql>
+    
+	<select id="get" resultType="LabFileBorrow">
+		SELECT 
+			<include refid="labFileBorrowColumns"/>
+		FROM lab_file_borrow a
+		<include refid="labFileBorrowJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="LabFileBorrow">
+		SELECT 
+			<include refid="labFileBorrowColumns"/>
+		FROM lab_file_borrow a
+		<include refid="labFileBorrowJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="fileborrowid != null and fileborrowid != ''">
+				AND a.fileborrowid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{fileborrowid}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{fileborrowid}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{fileborrowid},'%')</if>
+			</if>
+			<if test="reqname != null and reqname != ''">
+				AND a.reqname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{reqname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{reqname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{reqname},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="LabFileBorrow">
+		SELECT 
+			<include refid="labFileBorrowColumns"/>
+		FROM lab_file_borrow a
+		<include refid="labFileBorrowJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO lab_file_borrow(
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			stamp,
+			t1,
+			t2,
+			t3,
+			fileborrowid,
+			fileborrowstatus,
+			reqdepartment,
+			reqstartdate,
+			reqenddate,
+			approvename,
+			approveopinion,
+			reqname,
+			reqreason,
+			approvedate,
+			borrowexecuter,
+			borrowrecheck,
+			borrowrecheckdate,
+			revertexecuter,
+			revertrecheck,
+			revertrecheckdate,
+			id,
+			reqcontentcount
+		) VALUES (
+			           #{createBy.id},
+			           #{createDate},
+			           #{updateBy.id},
+			           #{updateDate},
+			           #{remarks},
+			           #{delFlag},
+	                   CURRENT_TIMESTAMP,
+			           #{t1},
+			           #{t2},
+			           #{t3},
+			           #{fileborrowid},
+			           #{fileborrowstatus},
+			           #{reqdepartment},
+			           #{reqstartdate},
+			           #{reqenddate},
+			           #{approvename},
+			           #{approveopinion},
+			           #{reqname},
+			           #{reqreason},
+			           #{approvedate},
+			           #{borrowexecuter},
+			           #{borrowrecheck},
+			           #{borrowrecheckdate},
+			           #{revertexecuter},
+			           #{revertrecheck},
+			           #{revertrecheckdate},
+			           #{id},
+			           #{reqcontentcount}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE lab_file_borrow SET 	
+			                 update_by = #{updateBy.id},
+			                 update_date = #{updateDate},
+			                 remarks = #{remarks},
+                             stamp=CURRENT_TIMESTAMP,
+			                 t1 = #{t1},
+			                 t2 = #{t2},
+			                 t3 = #{t3},
+			                 fileborrowid = #{fileborrowid},
+			                 fileborrowstatus = #{fileborrowstatus},
+			                 reqdepartment = #{reqdepartment},
+			                 reqstartdate = #{reqstartdate},
+			                 reqenddate = #{reqenddate},
+			                 approvename = #{approvename},
+			                 approveopinion = #{approveopinion},
+			                 reqname = #{reqname},
+			                 reqreason = #{reqreason},
+			                 approvedate = #{approvedate},
+			                 borrowexecuter = #{borrowexecuter},
+			                 borrowrecheck = #{borrowrecheck},
+			                 borrowrecheckdate = #{borrowrecheckdate},
+			                 revertexecuter = #{revertexecuter},
+			                 revertrecheck = #{revertrecheck},
+			                 revertrecheckdate = #{revertrecheckdate},
+			                 reqcontentcount = #{reqcontentcount}
+		WHERE id = #{id} and stamp = #{stamp}
+	</update>
+	
+	<update id="delete">
+		UPDATE lab_file_borrow SET 
+			del_flag = #{DEL_FLAG_DELETE},
+			stamp=CURRENT_TIMESTAMP
+		WHERE id = #{id} and stamp = #{stamp}
+	</update>
+	
+<!-- select lab_file_borrow by unique key -->
+    <select id="selectByReqNo" resultType="LabFileBorrow">
+        SELECT
+           <include refid="labFileBorrowColumns"/>
+        FROM lab_file_borrow a 
+        WHERE a.fileborrowid = #{fileborrowid}
+    </select>
+  
+     <select id="selectRequestNo" resultType="LabFileBorrow">
+        SELECT
+            a.id AS "id",
+	        a.fileborrowid AS "fileborrowid",
+	        a.fileborrowstatus AS "fileborrowstatus"
+	    FROM lab_file_borrow a 
+        WHERE fileborrowstatus = '3' AND del_flag = '0'
+    </select>
+
+
+    <select id="findByFileId" resultType="LabFileBorrow">
+        SELECT
+           <include refid="labFileBorrowColumns"/>
+        FROM lab_file_borrow a   inner join lab_file_borrow_relationship r on r.borrowID = a.id
+        where r.fileID = #{fileid}
+    </select>
+</mapper>

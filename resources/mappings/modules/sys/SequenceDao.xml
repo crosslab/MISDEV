@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="labs.modules.sys.dao.SequenceDao">
+    
+	<select id="get" resultType="Sequence">
+		SELECT 
+			* 
+		FROM sys_sequence 
+		WHERE name = #{name} for update
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_sequence(
+			name,
+			value,
+			init,
+			step,
+			max
+		) VALUES (
+			#{name}, 
+			#{value}, 
+			#{init}, 
+			#{step}, 
+			#{max}
+			
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_sequence SET 
+			value = #{value}
+		WHERE name = #{name}
+	</update>
+	
+</mapper>

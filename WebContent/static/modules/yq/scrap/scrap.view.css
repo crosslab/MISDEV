@@ -1,0 +1,19 @@
+.input-control {
+	width: 243px;
+}
+
+.textarea-control {
+	width: 607px;
+}
+
+.form-horizontal .label-control-l {
+	float: left;
+	width: 160px;
+	padding-top: 5px;
+	text-align: right;
+}
+
+.label-control-r {
+	width: 85px;
+	text-align: right;
+}

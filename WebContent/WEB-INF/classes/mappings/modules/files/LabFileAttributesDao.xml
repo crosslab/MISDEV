@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="labs.modules.files.dao.LabFileAttributesDao">
+    
+	<sql id="labFileAttributesColumns">
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.stamp AS "stamp",
+		a.t1 AS "t1",
+		a.t2 AS "t2",
+		a.t3 AS "t3",
+		a.fileid AS "fileid",
+		a.filename AS "filename",
+		a.id AS "id",
+		a.filecontrolid AS "filecontrolid",
+		a.filestandard AS "filestandard",
+		a.filetype AS "filetype",
+		a.filearchivedate AS "filearchivedate",
+		a.usedate AS "usedate",
+		a.placeaddress AS "placeaddress",
+		a.filestatus AS "filestatus"
+	</sql>
+	
+	<sql id="labFileAttributesJoins">
+	</sql>
+    
+	<select id="get" resultType="LabFileAttributes">
+		SELECT 
+			<include refid="labFileAttributesColumns"/>
+		FROM lab_file_attributes a
+		<include refid="labFileAttributesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="LabFileAttributes">
+		SELECT 
+			<include refid="labFileAttributesColumns"/>
+		FROM lab_file_attributes a
+		<include refid="labFileAttributesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="fileid != null and fileid != ''">
+				AND a.fileid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{fileid}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{fileid}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{fileid},'%')</if>
+			</if>
+			<if test="filename != null and filename != ''">
+				AND a.filename LIKE 
+					<if test="dbName == 'oracle'">'%'||#{filename}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{filename}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{filename},'%')</if>
+			</if>
+			<if test="filecontrolid != null and filecontrolid != ''">
+				AND a.filecontrolid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{filecontrolid}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{filecontrolid}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{filecontrolid},'%')</if>
+			</if>
+			<if test="filestandard != null and filestandard != ''">
+				AND a.filestandard LIKE 
+					<if test="dbName == 'oracle'">'%'||#{filestandard}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{filestandard}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{filestandard},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="LabFileAttributes">
+		SELECT 
+			<include refid="labFileAttributesColumns"/>
+		FROM lab_file_attributes a
+		<include refid="labFileAttributesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO lab_file_attributes(
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			stamp,
+			t1,
+			t2,
+			t3,
+			fileid,
+			filename,
+			id,
+			filecontrolid,
+			filestandard,
+			filetype,
+			filearchivedate,
+			usedate,
+			placeaddress,
+			filestatus
+		) VALUES (
+			           #{createBy.id},
+			           #{createDate},
+			           #{updateBy.id},
+			           #{updateDate},
+			           #{remarks},
+			           #{delFlag},
+	                   CURRENT_TIMESTAMP,
+			           #{t1},
+			           #{t2},
+			           #{t3},
+			           #{fileid},
+			           #{filename},
+			           #{id},
+			           #{filecontrolid},
+			           #{filestandard},
+			           #{filetype},
+			           #{filearchivedate},
+			           #{usedate},
+			           #{placeaddress},
+			           #{filestatus}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE lab_file_attributes SET 	
+			                 update_by = #{updateBy.id},
+			                 update_date = #{updateDate},
+			                 remarks = #{remarks},
+                             stamp=CURRENT_TIMESTAMP,
+			                 t1 = #{t1},
+			                 t2 = #{t2},
+			                 t3 = #{t3},
+			                 fileid = #{fileid},
+			                 filename = #{filename},
+			                 filecontrolid = #{filecontrolid},
+			                 filestandard = #{filestandard},
+			                 filetype = #{filetype},
+			                 filearchivedate = #{filearchivedate},
+			                 usedate = #{usedate},
+			                 placeaddress = #{placeaddress},
+			                 filestatus = #{filestatus}
+		WHERE id = #{id} and stamp = #{stamp}
+	</update>
+	
+	<update id="delete">
+		UPDATE lab_file_attributes SET 
+			del_flag = #{DEL_FLAG_DELETE},
+			stamp=CURRENT_TIMESTAMP
+		WHERE id = #{id} and stamp = #{stamp}
+	</update>
+	
+	<update id="updateDqztByBorrowId" parameterType="java.util.HashMap">
+	    update lab_file_attributes set fileStatus = #{fileStatus}
+        where fileID in
+        (select rb.fileID
+        from 
+        lab_file_borrow_relationship rb inner join lab_file_borrow r on r.id = rb.borrowID
+        where r.fileBorrowID =#{borrowId}
+        )
+	</update>
+</mapper>
