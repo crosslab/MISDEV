@@ -37,7 +37,7 @@ Back-end:
 User manual:
 
   Please read the document folder.
-  The <MISDEV开发平台介绍.ppt> is recommendatory.
+  The PPT of MISDEV开发平台介绍.ppt is recommendatory.
 
 
 Next plan:
