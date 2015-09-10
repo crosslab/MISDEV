@@ -34,6 +34,10 @@ Back-end:
     Cache framework：Redis
     Log management：Log4j
 
+User manual:
+  Please read the document folder.
+  The <<MISDEV开发平台介绍.ppt>> is recommendatory.
+
 
 Next plan:
 
